@@ -513,3 +513,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,rider,dotnetcore,windows,macos
+src/.idea
+build
