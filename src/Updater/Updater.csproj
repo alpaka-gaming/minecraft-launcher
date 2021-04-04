@@ -9,6 +9,8 @@
         <PublishTrimmed>true</PublishTrimmed>
         <PublishReadyToRun>true</PublishReadyToRun>
         <ApplicationIcon>Icon.ico</ApplicationIcon>
+        <Deterministic>false</Deterministic>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
 
     <ItemGroup>

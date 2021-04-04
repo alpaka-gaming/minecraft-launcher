@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using Flurl.Http;
@@ -30,7 +31,10 @@ namespace Updater
 
         private static Uri Server => new(Configuracion["AppSettings:Url"]);
         private static string GamePath => Environment.ExpandEnvironmentVariables(Configuracion["AppSettings:GamePath"]);
-        private static string Definition => Configuracion["AppSettings:Definition"];
+        private static string Profile => Configuracion["AppSettings:Profile"];
+
+        private static Version Version => Assembly.GetExecutingAssembly().GetName().Version;
+        private static string Name => Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyProductAttribute>()?.Product;
 
         #endregion
 
@@ -47,6 +51,9 @@ namespace Updater
         {
             AppDomain.CurrentDomain.UnhandledException += UnhandledException;
 
+            Console.WriteLine($"{Name} v{Version.ToString(3)}");
+            Console.WriteLine("");
+
             Configuracion = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", false, true)
 #if DEBUG
@@ -61,6 +68,7 @@ namespace Updater
                 builder.AddNLog(new NLogLoggingConfiguration(Configuracion.GetSection("NLog")));
             }).AddOptions();
 
+            Servicios.AddSingleton(Configuracion);
             Contenedor = Servicios.BuildServiceProvider();
             var factory = Contenedor.GetService<ILoggerFactory>();
             Logger = factory.CreateLogger(typeof(Program));
@@ -75,11 +83,13 @@ namespace Updater
         public static async Task MainAsync()
         {
             if (!await ConnectServer()) throw new OperationCanceledException("No se pudo conectar al servidor.");
-            if (!await GetDefinition()) throw new OperationCanceledException("No se pudo obtener la definición.");
+            if (!await GetProfile()) throw new OperationCanceledException("No se pudo obtener el perfil del juego.");
             if (!await FindGame()) throw new OperationCanceledException("No se pudo encontrar al ruta del juego.");
 
+            ValidateVersion();
+
             await PrintInfo();
-            
+
             if (!await ValidateProfile()) throw new OperationCanceledException("No se pudo validar el perfil.");
 
             var versionId = $"{Versions["Minecraft"]}-forge-{Versions["Forge"]}";
@@ -87,7 +97,7 @@ namespace Updater
             foreach (var profile in profiles)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"{profile.Value.Name}");
+                Console.WriteLine($"Perfil: {profile.Value.Name} ({versionId})");
                 Console.ResetColor();
 
                 var gamePath = profile.Value.GameDir;
@@ -112,6 +122,15 @@ namespace Updater
                         var name = Path.GetFileNameWithoutExtension(localFolderPath);
                         try
                         {
+                            if (File.Exists(localFolderPath))
+                            {
+                                var localLength = new System.IO.FileInfo(localFolderPath).Length;
+                                var remoteLength = await urlTemp.GetLengthAsync();
+
+                                if (localLength != remoteLength)
+                                    File.Delete(localFolderPath);
+                            }
+
                             if (ext == ".jar" || ext == ".bak" || ext == ".zip")
                             {
                                 if (!File.Exists(localFolderPath) && !File.Exists(jarFile) && !File.Exists(zipFile))
@@ -122,6 +141,7 @@ namespace Updater
                                     {
                                         var localFolder = directoryInfo.FullName;
                                         await urlTemp.DownloadFileAsync(localFolder);
+
                                         Console.ForegroundColor = ConsoleColor.Green;
                                         Console.Write($"[LISTO]");
                                         Console.WriteLine();
@@ -205,14 +225,28 @@ namespace Updater
             return isServerOn;
         }
 
-        private static async Task<bool> GetDefinition()
+        private static bool ValidateVersion()
         {
-            Console.Write("Obteniendo definición:");
+            if (Versions.ContainsKey("Updater"))
+            {
+                var minVersion = Versions["Updater"];
+                if (Version < minVersion)
+                {
+                    throw new InvalidOperationException("Debe descargar la ultima versión del updater.");
+                }
+            }
+
+            return true;
+        }
+
+        private static async Task<bool> GetProfile()
+        {
+            Console.Write("Obteniendo perfil:");
             try
             {
                 var tempFile = new FileInfo(Path.GetTempFileName());
                 var tempPath = tempFile.Directory?.FullName;
-                await $"{Server}/{Definition}.json".DownloadFileAsync(tempPath, tempFile.Name);
+                await $"{Server}/{Profile}.json".DownloadFileAsync(tempPath, tempFile.Name);
                 var data = await File.ReadAllTextAsync(tempFile.FullName);
                 var definition = JsonConvert.DeserializeObject<JObject>(data);
 
@@ -286,7 +320,7 @@ namespace Updater
             Console.WriteLine();
             var tempFile = new FileInfo(Path.GetTempFileName());
             if (tempFile.Directory != null)
-                await $"{Server}/{Definition}.txt".DownloadFileAsync(tempFile.Directory.FullName, tempFile.Name);
+                await $"{Server}/{Profile}.txt".DownloadFileAsync(tempFile.Directory.FullName, tempFile.Name);
             if (File.Exists(tempFile.FullName))
             {
                 var data = File.ReadAllLines(tempFile.FullName);
@@ -299,11 +333,8 @@ namespace Updater
 
         private static async Task<List<string>> GetFiles(string folder)
         {
-            var fixString = new Func<string, string>(m =>
-            {
-                return HttpUtility.UrlDecode(m.Replace("+", "%2b"));
-            });
-            
+            var fixString = new Func<string, string>(m => { return HttpUtility.UrlDecode(m.Replace("+", "%2b")); });
+
             var url = $"{Server}{folder}";
 
             var files = new List<string>();
