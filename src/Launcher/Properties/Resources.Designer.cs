@@ -71,12 +71,48 @@ namespace Launcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ERR.
+        /// </summary>
+        internal static string FailStatus {
+            get {
+                return ResourceManager.GetString("FailStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descargas: [{0}].
+        /// </summary>
+        internal static string FastDownloadStatus {
+            get {
+                return ResourceManager.GetString("FastDownloadStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        internal static string OkStatus {
+            get {
+                return ResourceManager.GetString("OkStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap pack {
             get {
                 object obj = ResourceManager.GetObject("pack", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Servidor: [{0}].
+        /// </summary>
+        internal static string ServerStatus {
+            get {
+                return ResourceManager.GetString("ServerStatus", resourceCulture);
             }
         }
     }

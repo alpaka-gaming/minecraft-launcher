@@ -30,35 +30,39 @@ namespace Launcher
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonPlay = new System.Windows.Forms.Button();
             this.flowLayoutPanelNews = new System.Windows.Forms.FlowLayoutPanel();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.pictureBoxBanner = new System.Windows.Forms.PictureBox();
+            this.panelHeader = new System.Windows.Forms.Panel();
             this.labelVersion = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.labelTitle = new System.Windows.Forms.Label();
+            this.pictureBoxIcon = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.progressBarActions = new System.Windows.Forms.ProgressBar();
-            this.panel4 = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panelStatus = new System.Windows.Forms.Panel();
+            this.labelValidate = new System.Windows.Forms.Label();
+            this.labelServer = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).BeginInit();
+            this.panelHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
             this.panel3.SuspendLayout();
+            this.panelStatus.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // buttonPlay
             // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.button1.BackColor = System.Drawing.Color.SeaGreen;
-            this.button1.Enabled = false;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button1.Location = new System.Drawing.Point(328, 122);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(128, 48);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "&ENTRAR";
-            this.button1.UseVisualStyleBackColor = false;
+            this.buttonPlay.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonPlay.BackColor = System.Drawing.Color.SeaGreen;
+            this.buttonPlay.Enabled = false;
+            this.buttonPlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPlay.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonPlay.Location = new System.Drawing.Point(328, 122);
+            this.buttonPlay.Name = "buttonPlay";
+            this.buttonPlay.Size = new System.Drawing.Size(128, 48);
+            this.buttonPlay.TabIndex = 5;
+            this.buttonPlay.Text = "&ENTRAR";
+            this.buttonPlay.UseVisualStyleBackColor = false;
+            this.buttonPlay.Click += new System.EventHandler(this.buttonPlay_Click);
             // 
             // flowLayoutPanelNews
             // 
@@ -69,29 +73,29 @@ namespace Launcher
             this.flowLayoutPanelNews.Size = new System.Drawing.Size(784, 369);
             this.flowLayoutPanelNews.TabIndex = 10;
             // 
-            // pictureBox3
+            // pictureBoxBanner
             // 
-            this.pictureBox3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pictureBox3.Image = global::Launcher.Properties.Resources.Background;
-            this.pictureBox3.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(784, 139);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox3.TabIndex = 2;
-            this.pictureBox3.TabStop = false;
+            this.pictureBoxBanner.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pictureBoxBanner.Image = global::Launcher.Properties.Resources.Background;
+            this.pictureBoxBanner.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxBanner.Name = "pictureBoxBanner";
+            this.pictureBoxBanner.Size = new System.Drawing.Size(784, 139);
+            this.pictureBoxBanner.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBoxBanner.TabIndex = 2;
+            this.pictureBoxBanner.TabStop = false;
             // 
-            // panel2
+            // panelHeader
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
-            this.panel2.Controls.Add(this.labelVersion);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.pictureBox1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(8);
-            this.panel2.Size = new System.Drawing.Size(784, 46);
-            this.panel2.TabIndex = 9;
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
+            this.panelHeader.Controls.Add(this.labelVersion);
+            this.panelHeader.Controls.Add(this.labelTitle);
+            this.panelHeader.Controls.Add(this.pictureBoxIcon);
+            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Padding = new System.Windows.Forms.Padding(8);
+            this.panelHeader.Size = new System.Drawing.Size(784, 46);
+            this.panelHeader.TabIndex = 9;
             // 
             // labelVersion
             // 
@@ -105,37 +109,37 @@ namespace Launcher
             this.labelVersion.TabIndex = 0;
             this.labelVersion.Text = "1.0.0";
             // 
-            // label1
+            // labelTitle
             // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(38, 8);
-            this.label1.Name = "label1";
-            this.label1.Padding = new System.Windows.Forms.Padding(4);
-            this.label1.Size = new System.Drawing.Size(410, 30);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "MINECRAFT: LISIADOS";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelTitle.Dock = System.Windows.Forms.DockStyle.Left;
+            this.labelTitle.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelTitle.Location = new System.Drawing.Point(38, 8);
+            this.labelTitle.Name = "labelTitle";
+            this.labelTitle.Padding = new System.Windows.Forms.Padding(4);
+            this.labelTitle.Size = new System.Drawing.Size(410, 30);
+            this.labelTitle.TabIndex = 0;
+            this.labelTitle.Text = "MINECRAFT: LISIADOS";
+            this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pictureBox1
+            // pictureBoxIcon
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pictureBox1.Image = global::Launcher.Properties.Resources.pack;
-            this.pictureBox1.Location = new System.Drawing.Point(8, 8);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(30, 30);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
+            this.pictureBoxIcon.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pictureBoxIcon.Image = global::Launcher.Properties.Resources.pack;
+            this.pictureBoxIcon.Location = new System.Drawing.Point(8, 8);
+            this.pictureBoxIcon.Name = "pictureBoxIcon";
+            this.pictureBoxIcon.Size = new System.Drawing.Size(30, 30);
+            this.pictureBoxIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxIcon.TabIndex = 3;
+            this.pictureBoxIcon.TabStop = false;
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.panel3.Controls.Add(this.button1);
+            this.panel3.Controls.Add(this.buttonPlay);
             this.panel3.Controls.Add(this.flowLayoutPanelNews);
             this.panel3.Controls.Add(this.progressBarActions);
-            this.panel3.Controls.Add(this.panel4);
-            this.panel3.Controls.Add(this.pictureBox3);
+            this.panel3.Controls.Add(this.panelStatus);
+            this.panel3.Controls.Add(this.pictureBoxBanner);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
@@ -152,14 +156,40 @@ namespace Launcher
             this.progressBarActions.TabIndex = 9;
             this.progressBarActions.Value = 100;
             // 
-            // panel4
+            // panelStatus
             // 
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(0, 139);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(784, 49);
-            this.panel4.TabIndex = 8;
+            this.panelStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
+            this.panelStatus.Controls.Add(this.labelValidate);
+            this.panelStatus.Controls.Add(this.labelServer);
+            this.panelStatus.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelStatus.Location = new System.Drawing.Point(0, 139);
+            this.panelStatus.Name = "panelStatus";
+            this.panelStatus.Size = new System.Drawing.Size(784, 49);
+            this.panelStatus.TabIndex = 8;
+            // 
+            // labelValidate
+            // 
+            this.labelValidate.Dock = System.Windows.Forms.DockStyle.Left;
+            this.labelValidate.Font = new System.Drawing.Font("Consolas", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelValidate.Location = new System.Drawing.Point(0, 0);
+            this.labelValidate.Name = "labelValidate";
+            this.labelValidate.Padding = new System.Windows.Forms.Padding(8);
+            this.labelValidate.Size = new System.Drawing.Size(256, 49);
+            this.labelValidate.TabIndex = 2;
+            this.labelValidate.Text = "Validando...";
+            this.labelValidate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelServer
+            // 
+            this.labelServer.Dock = System.Windows.Forms.DockStyle.Right;
+            this.labelServer.Font = new System.Drawing.Font("Consolas", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelServer.Location = new System.Drawing.Point(528, 0);
+            this.labelServer.Name = "labelServer";
+            this.labelServer.Padding = new System.Windows.Forms.Padding(8);
+            this.labelServer.Size = new System.Drawing.Size(256, 49);
+            this.labelServer.TabIndex = 1;
+            this.labelServer.Text = "Conectando...";
+            this.labelServer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // FormMain
             // 
@@ -167,7 +197,7 @@ namespace Launcher
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.ClientSize = new System.Drawing.Size(784, 561);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.panel3);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -178,26 +208,29 @@ namespace Launcher
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Minecraft: Lisiados";
             this.Load += new System.EventHandler(this.FormMain_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).EndInit();
+            this.panelHeader.ResumeLayout(false);
+            this.panelHeader.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).EndInit();
             this.panel3.ResumeLayout(false);
+            this.panelStatus.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonPlay;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelNews;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.PictureBox pictureBoxBanner;
+        private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label labelVersion;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.PictureBox pictureBoxIcon;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.ProgressBar progressBarActions;
-        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panelStatus;
+        private System.Windows.Forms.Label labelServer;
+        private System.Windows.Forms.Label labelValidate;
     }
 }
