@@ -1,5 +1,5 @@
 ﻿using Flurl.Http;
-using Launcher.Controllers;
+using Launcher.Services;
 using Launcher.Model;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,12 +22,14 @@ namespace Launcher
         private readonly IServer _server;
         private readonly IJava _java;
         private readonly IGame _game;
+        private readonly IComputer _computer;
 
-        public FormMain(IServer server, IJava java, IGame game, ILoggerFactory logger)
+        public FormMain(IServer server, IJava java, IGame game, IComputer computer, ILoggerFactory logger)
         {
             _server = server;
             _java = java;
             _game = game;
+            _computer = computer;
             _logger = logger.CreateLogger(GetType());
 
             InitializeComponent();
@@ -47,9 +49,10 @@ namespace Launcher
 
             var gamePath = await _game.FindGame();
             var profile = await _server.GetProfile();
-            var valids = await _game.ValidateProfile();
+            var gprofiles = await _game.LoadProfiles();
+            var gaccounts = await _game.LoadAccounts();
 
-            buttonPlay.Enabled = server && gamePath && profile && valids;
+            buttonPlay.Enabled = server && gamePath && gprofiles && gaccounts;
 
         }
 
@@ -153,7 +156,11 @@ namespace Launcher
             args.Add($"--gameDir {profile.Value.GameDir}");
             args.Add($"--version {profile.Value.LastVersionId}");
             args.Add("-Xss1M");
-            args.Add("-Xmx2G");
+            var ram = _computer.InstalledRam();
+            var xmx = ram >= 4096 ? $"{(int)((ram / 4) / 1024)}G" : $"{(int)(ram / 4)}M";
+            var xms = ram >= 6144 ? $"{(int)((ram / 6) / 1024)}G" : $"{(int)(ram / 6)}M";
+            args.Add($"-Xmx{xmx}");
+            args.Add($"-Xms{xms}");
             args.Add("-XX:+UnlockExperimentalVMOptions");
             args.Add("-XX:+UseG1GC");
             args.Add("-XX:G1NewSizePercent=20");

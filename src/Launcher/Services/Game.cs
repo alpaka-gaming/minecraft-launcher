@@ -10,15 +10,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Launcher.Controllers
+namespace Launcher.Services
 {
     public interface IGame
     {
         string GamePath { get; }
-        Task<bool> ValidateProfile();
+        Task<bool> LoadProfiles();
+        Task<bool> LoadAccounts();
         Task<bool> FindGame();
         string LocalPath { get; set; }
         Dictionary<string, Profile> Profiles { get; set; }
+        Dictionary<string, Account> Accounts { get; set; }
+
+        Account ActiveAccount { get; set; }
+        string ClientToken { get; }
     }
     public class Game : IGame
     {
@@ -59,12 +64,12 @@ namespace Launcher.Controllers
             }
         }
 
-        public async Task<bool> ValidateProfile()
+        public async Task<bool> LoadProfiles()
         {
-            var profileFile = Path.Combine(GamePath, "launcher_profiles.json");
-            if (File.Exists(profileFile))
+            var file = Path.Combine(GamePath, "launcher_profiles.json");
+            if (File.Exists(file))
             {
-                var content = await File.ReadAllTextAsync(profileFile);
+                var content = await File.ReadAllTextAsync(file);
                 var profiles = JsonConvert.DeserializeObject<JObject>(content).Children().Where(m => m.Path == "profiles").ToList();
                 var value = profiles.First().First().ToString();
                 Profiles = JsonConvert.DeserializeObject<Dictionary<string, Profile>>(value);
@@ -74,9 +79,39 @@ namespace Launcher.Controllers
             return false;
         }
 
-        public string LocalPath { get; set; }
-        public Dictionary<string, Profile> Profiles { get; set; }
+        public async Task<bool> LoadAccounts()
+        {
+            var file = Path.Combine(GamePath, "launcher_accounts.json");
+            if (File.Exists(file))
+            {
+                var content = await File.ReadAllTextAsync(file);
+                var jobject = JsonConvert.DeserializeObject<JObject>(content);
+                var profiles = jobject.Children().Where(m => m.Path == "accounts").ToList();
+                var value = profiles.First().First().ToString();
+                Accounts = JsonConvert.DeserializeObject<Dictionary<string, Account>>(value);
 
+                var active = jobject.Children().FirstOrDefault(m => m.Path == "activeAccountLocalId")?.LastOrDefault();
+                if (active != null)
+                    ActiveAccount = Accounts[active.Value<string>()];
+
+                var token = jobject.Children().FirstOrDefault(m => m.Path == "mojangClientToken")?.LastOrDefault();
+                if (token != null)
+                    ClientToken = token.Value<string>();
+
+
+                return Accounts.Any();
+            }
+
+            return false;
+        }
+
+        public string LocalPath { get; set; }
+
+        public Dictionary<string, Profile> Profiles { get; set; }
+        public Dictionary<string, Account> Accounts { get; set; }
+
+        public Account ActiveAccount { get; set; }
+        public string ClientToken { get; private set; }
 
     }
 }

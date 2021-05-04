@@ -17,7 +17,7 @@ using Launcher.Models;
 using System.Net.NetworkInformation;
 using Flurl.Http;
 using System.Windows.Forms;
-using Launcher.Controllers;
+using Launcher.Services;
 
 namespace Launcher
 {
@@ -68,6 +68,7 @@ namespace Launcher
             services.AddSingleton<IJava, Java>();
             services.AddSingleton<IServer, Server>();
             services.AddSingleton<IGame, Game>();
+            services.AddSingleton<IComputer, Computer>();
 
             services.AddScoped<FormMain>();
 

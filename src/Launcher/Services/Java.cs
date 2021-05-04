@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Launcher.Controllers
+namespace Launcher.Services
 {
 
     public interface IJava
