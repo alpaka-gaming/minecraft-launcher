@@ -172,6 +172,14 @@ namespace Launcher
             args.Add("--launchTarget fmlclient");
             args.Add($"--fml.forgeVersion {_server.Versions["Forge"]}"); //36.1.4
             args.Add($"--fml.mcVersion {_server.Versions["Minecraft"]}"); //1.16.5
+            args.Add($"--userType mojang");
+            args.Add($"--username {_game.ActiveAccount.MinecraftProfile.Name}");
+            args.Add($@"--assetsDir C:\Users\ennerperez\AppData\Roaming\.minecraft\assets");
+            args.Add($"--assetIndex 1.16 --uuid {_game.ActiveAccount.MinecraftProfile.Id}");
+            args.Add($"--accessToken {_game.ActiveAccount.AccessToken}");
+            args.Add($"--userType mojang");
+            args.Add($"--versionType release");
+            args.Add($"--fml.forgeGroup net.minecraftforge");
             var process = new Process()
             {
                 StartInfo = new ProcessStartInfo()
