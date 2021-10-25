@@ -2,16 +2,83 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:Launcher"
              x:Class="Launcher.App">
+    
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
-
-    <Application.Styles>
-        <FluentTheme Mode="Dark"/>
-    </Application.Styles>
     
     <Application.Resources>
         <SolidColorBrush x:Key="Background">#242424</SolidColorBrush>
     </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme Mode="Dark"/>
+        <!-- Bootstrap Styles -->
+        <Style Selector="ProgressBar.success">
+            <Setter Property="Foreground" Value="#63B78F" />
+        </Style>
+        <Style Selector="TextBlock.h1">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Foreground" Value="#63B78F" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="TextBlock.p">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="TextBlock.small">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button.btn">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button.btn-lg">
+            <Setter Property="MinHeight" Value="32" />
+            <Setter Property="MinWidth" Value="128" />
+        </Style>
+        <Style Selector="Button.btn-primary">
+            <Setter Property="Background" Value="#63B78F" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+        </Style>
+        <Style Selector="Button.btn-secondary">
+            <Setter Property="Background" Value="#1C212D" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+        </Style>
+        <Style Selector="Button.btn-success">
+            <Setter Property="Background" Value="#63B78F" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+        </Style>
+        <Style Selector="Button.btn-danger">
+            <Setter Property="Background" Value="#EF5F50" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+        </Style>
+        <Style Selector="Button.btn-warning">
+            <Setter Property="Background" Value="#FFC107" />
+            <Setter Property="Foreground" Value="#000000" />
+        </Style>
+        <Style Selector="Button.btn-info">
+            <Setter Property="Background" Value="#0DCAF0" />
+            <Setter Property="Foreground" Value="#000000" />
+        </Style>
+        <Style Selector="Button.btn-light">
+            <Setter Property="Background" Value="#F8F9FA" />
+            <Setter Property="Foreground" Value="#000000" />
+        </Style>
+        <Style Selector="Button.btn-dark">
+            <Setter Property="Background" Value="#000000" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+        </Style>
+    </Application.Styles>
     
 </Application>
