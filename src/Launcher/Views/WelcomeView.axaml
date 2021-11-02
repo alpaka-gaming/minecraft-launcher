@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:Launcher.ViewModels"
              xmlns:prism="http://prismlibrary.com/"
              x:Class="Launcher.Views.WelcomeView"
+             MinWidth="640" MinHeight="480" Margin="32"
              prism:ViewModelLocator.AutoWireViewModel="true">
     <UserControl.Resources>
         <converters:BoolInverterConverter x:Key="BoolInverterConverter" />
@@ -12,13 +13,24 @@
         <vm:WelcomeViewModel />
     </Design.DataContext>
     
+    <UserControl.Styles>
+        <Style Selector="Image.logo">
+            <Style.Animations>
+                <Animation FillMode="Forward" Duration="0:0:2.0" Easing="SineEaseInOut">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Width" Value="200"/>
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Width" Value="400"/>
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+    </UserControl.Styles>
+    
     <StackPanel Orientation="Vertical">
-        <Label Classes="h1 text-primary">Lisiados</Label>
-        <Label Classes="h2 text-secondary">Lisiados</Label>
-        <Label Classes="h3 text-success">Lisiados</Label>
-        <Label Classes="h4 text-danger">Lisiados</Label>
-        <Label Classes="h5 text-warning">Lisiados</Label>
-        <Label Classes="h6 text-info">Lisiados</Label>
+        <Image Classes="logo" Source="{SvgImage /Assets/Images/Minecraft_Platform-Logo.svg}" Stretch="Fill" Width="200" MaxWidth="400" Margin="16" />
+        <!-- <Label Classes="h1 text-primary text-center">Lisiados</Label> -->
     </StackPanel>
     
 </UserControl>
