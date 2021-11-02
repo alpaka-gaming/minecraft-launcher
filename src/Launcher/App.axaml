@@ -8,7 +8,8 @@
     </Application.DataTemplates>
     
     <Application.Resources>
-        <SolidColorBrush x:Key="Background">#242424</SolidColorBrush>
+        <!--<SolidColorBrush x:Key="Background">#242424</SolidColorBrush>-->
+        <Color x:Key="Background">#242424</Color>
     </Application.Resources>
 
     <Application.Styles>

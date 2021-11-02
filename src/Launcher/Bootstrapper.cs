@@ -1,4 +1,5 @@
-﻿using Prism.Ioc;
+﻿using Launcher.Views;
+using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 
@@ -20,6 +21,7 @@ namespace Launcher
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
+            _regionManager.RegisterViewWithRegion("MainRegion", typeof(WelcomeView));
         }
     }
 }

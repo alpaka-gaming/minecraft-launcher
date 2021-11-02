@@ -1,11 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Launcher.Views;
+using Microsoft.Extensions.Logging;
+using Prism.Regions;
 
 namespace Launcher.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public string Greeting => "Welcome to Avalonia!";
+        public MainWindowViewModel()
+        {
+        }
+
+        public MainWindowViewModel(IRegionManager regionManager, ILoggerFactory loggerFactory) : base(regionManager, loggerFactory)
+        {
+            _regionManager.RequestNavigate("MainRegion", nameof(WelcomeView));
+        }
     }
 }

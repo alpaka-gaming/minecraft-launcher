@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -103,6 +104,7 @@ namespace Launcher
             {
                 var ex = (Exception)e.ExceptionObject;
                 Log.Fatal(ex, "The Application failed to start");
+                await Task.Yield();
                 //await MessageBox.Show((Window)(Application.Current as PrismApplication)?.MainWindow!, ex.Message, "Error", MessageBox.MessageBoxButtons.Ok);
             }
         }
