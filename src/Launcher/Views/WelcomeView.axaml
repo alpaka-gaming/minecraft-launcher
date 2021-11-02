@@ -12,14 +12,13 @@
         <vm:WelcomeViewModel />
     </Design.DataContext>
     
-    <Grid RowDefinitions="*" ColumnDefinitions="Auto,*">
-        <Panel Grid.Row="0" Grid.Column="0" Width="100" Margin="8">
-            <Label>Lisiados</Label>
-        </Panel>
-        <Panel Grid.Row="0" Grid.Column="1">
-            <Image Source="../Assets/Images/Background.png" VerticalAlignment="Top" />
-            <Button Background="#0a8d48" HorizontalAlignment="Center" Width="100" HorizontalContentAlignment="Center">JUGAR</Button>
-        </Panel>
-    </Grid>
+    <StackPanel Orientation="Vertical">
+        <Label Classes="h1 text-primary">Lisiados</Label>
+        <Label Classes="h2 text-secondary">Lisiados</Label>
+        <Label Classes="h3 text-success">Lisiados</Label>
+        <Label Classes="h4 text-danger">Lisiados</Label>
+        <Label Classes="h5 text-warning">Lisiados</Label>
+        <Label Classes="h6 text-info">Lisiados</Label>
+    </StackPanel>
     
 </UserControl>
