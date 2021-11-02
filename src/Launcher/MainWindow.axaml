@@ -10,7 +10,7 @@
         MinWidth="800" MinHeight="450"
         x:Class="Launcher.MainWindow"
         Icon="/Assets/Icon.ico"
-        Background="{DynamicResource Background}"
+        Background="{DynamicResource background}"
         TransparencyLevelHint="AcrylicBlur"
         ExtendClientAreaToDecorationsHint="true"
         prism:ViewModelLocator.AutoWireViewModel="true"
@@ -24,7 +24,7 @@
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial
                     BackgroundSource="Digger"
-                    TintColor="{StaticResource Background}"
+                    TintColor="{StaticResource tint}"
                     TintOpacity="1"
                     MaterialOpacity="1" />
             </ExperimentalAcrylicBorder.Material>

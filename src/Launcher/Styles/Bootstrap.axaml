@@ -1,47 +1,225 @@
-﻿<Styles xmlns="https://github.com/avaloniaui" 
+﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
-    <!-- Bootstrap Styles -->
+
+    <!-- FontSize -->
+    <Style Selector=":is(TemplatedControl).fs-1">
+        <Setter Property="FontSize" Value="24" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).fs-2">
+        <Setter Property="FontSize" Value="22" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).fs-3">
+        <Setter Property="FontSize" Value="20" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).fs-4">
+        <Setter Property="FontSize" Value="18" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).fs-5">
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).fs-6">
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <!-- FontWeight -->
+    <Style Selector=":is(TemplatedControl).fw-bold">
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).fw-bolder">
+        <Setter Property="FontWeight" Value="ExtraBold" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).fw-normal">
+        <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).fw-light">
+        <Setter Property="FontWeight" Value="Light" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).fw-lighter">
+        <Setter Property="FontWeight" Value="ExtraLight" />
+    </Style>
+
+    <!-- FontStyle -->
+    <Style Selector=":is(TemplatedControl).fst-italic">
+        <Setter Property="FontStyle" Value="Italic" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).fst-normal">
+        <Setter Property="FontStyle" Value="Normal" />
+    </Style>
+
+    <!-- Headings -->
+    <Style Selector=":is(TemplatedControl).h1">
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="Foreground" Value="{StaticResource primary}" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).h2">
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="Foreground" Value="{StaticResource primary}" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).h3">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="Foreground" Value="{StaticResource primary}" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).h4">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Foreground" Value="{StaticResource primary}" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).h5">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Foreground" Value="{StaticResource primary}" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).h6">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource primary}" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
+    <!-- Text -->
+    <Style Selector=":is(TemplatedControl).lead">
+        <Setter Property="FontWeight" Value="300" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).p">
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).small">
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    
+    <!-- Foreground -->
+    <Style Selector=":is(TemplatedControl).text-primary">
+        <Setter Property="Foreground" Value="{StaticResource primary}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).text-secondary">
+        <Setter Property="Foreground" Value="{StaticResource secondary}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).text-success">
+        <Setter Property="Foreground" Value="{StaticResource success}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).text-danger">
+        <Setter Property="Foreground" Value="{StaticResource danger}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).text-warning">
+        <Setter Property="Foreground" Value="{StaticResource warning}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).text-info">
+        <Setter Property="Foreground" Value="{StaticResource info}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).text-light">
+        <Setter Property="Foreground" Value="{StaticResource light}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).text-dark">
+        <Setter Property="Foreground" Value="{StaticResource dark}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).text-body">
+        <Setter Property="Foreground" Value="{StaticResource body}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).text-muted">
+        <Setter Property="Foreground" Value="{StaticResource muted}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).text-white">
+        <Setter Property="Foreground" Value="{StaticResource white}" />
+    </Style>
+    
+    <!-- Backgrounds -->
+    <Style Selector=":is(TemplatedControl).bg-primary">
+        <Setter Property="Background" Value="{StaticResource primary}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).bg-secondary">
+        <Setter Property="Background" Value="{StaticResource secondary}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).bg-success">
+        <Setter Property="Background" Value="{StaticResource success}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).bg-danger">
+        <Setter Property="Background" Value="{StaticResource danger}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).bg-warning">
+        <Setter Property="Background" Value="{StaticResource warning}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).bg-info">
+        <Setter Property="Background" Value="{StaticResource info}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).bg-light">
+        <Setter Property="Background" Value="{StaticResource light}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).bg-dark">
+        <Setter Property="Background" Value="{StaticResource dark}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).bg-body">
+        <Setter Property="Background" Value="{StaticResource body}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).bg-muted">
+        <Setter Property="Background" Value="{StaticResource muted}" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).bg-white">
+        <Setter Property="Background" Value="{StaticResource white}" />
+    </Style>
+
+    <!-- Align -->
+    <Style Selector=":is(TemplatedControl).text-start">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).text-center">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).text-end">
+        <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+    <Style Selector=":is(TemplatedControl).text-stretch">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+    </Style>
+
+    <!-- ProgressBar -->
     <Style Selector="ProgressBar.success">
         <Setter Property="Foreground" Value="#63B78F" />
     </Style>
-    <Style Selector="TextBlock.h1">
-        <Setter Property="FontSize" Value="18" /> <Setter Property="Foreground" Value="#63B78F" /> <Setter Property="FontWeight" Value="Bold" /> <Setter Property="Margin" Value="0,0,0,0" /> <Setter Property="HorizontalAlignment" Value="Center" /> <Setter Property="VerticalAlignment" Value="Center" />
-    </Style>
-    <Style Selector="TextBlock.p">
-        <Setter Property="FontSize" Value="16" /> <Setter Property="Margin" Value="0,0,0,0" /> <Setter Property="HorizontalAlignment" Value="Center" /> <Setter Property="VerticalAlignment" Value="Center" />
-    </Style>
-    <Style Selector="TextBlock.small">
-        <Setter Property="FontSize" Value="12" /> <Setter Property="Margin" Value="0,0,0,0" /> <Setter Property="HorizontalAlignment" Value="Center" /> <Setter Property="VerticalAlignment" Value="Center" />
-    </Style>
+    
+    <!-- Button -->
     <Style Selector="Button.btn">
-        <Setter Property="VerticalContentAlignment" Value="Center" /> <Setter Property="HorizontalContentAlignment" Value="Center" /> <Setter Property="HorizontalAlignment" Value="Center" /> <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
     <Style Selector="Button.btn-lg">
-        <Setter Property="MinHeight" Value="32" /> <Setter Property="MinWidth" Value="128" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="MinWidth" Value="128" />
     </Style>
     <Style Selector="Button.btn-primary">
-        <Setter Property="Background" Value="#63B78F" /> <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="Background" Value="#63B78F" />
+        <Setter Property="Foreground" Value="#FFFFFF" />
     </Style>
     <Style Selector="Button.btn-secondary">
-        <Setter Property="Background" Value="#1C212D" /> <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="Background" Value="#1C212D" />
+        <Setter Property="Foreground" Value="#FFFFFF" />
     </Style>
     <Style Selector="Button.btn-success">
-        <Setter Property="Background" Value="#63B78F" /> <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="Background" Value="#63B78F" />
+        <Setter Property="Foreground" Value="#FFFFFF" />
     </Style>
     <Style Selector="Button.btn-danger">
-        <Setter Property="Background" Value="#EF5F50" /> <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="Background" Value="#EF5F50" />
+        <Setter Property="Foreground" Value="#FFFFFF" />
     </Style>
     <Style Selector="Button.btn-warning">
-        <Setter Property="Background" Value="#FFC107" /> <Setter Property="Foreground" Value="#000000" />
+        <Setter Property="Background" Value="#FFC107" />
+        <Setter Property="Foreground" Value="#000000" />
     </Style>
     <Style Selector="Button.btn-info">
-        <Setter Property="Background" Value="#0DCAF0" /> <Setter Property="Foreground" Value="#000000" />
+        <Setter Property="Background" Value="#0DCAF0" />
+        <Setter Property="Foreground" Value="#000000" />
     </Style>
     <Style Selector="Button.btn-light">
-        <Setter Property="Background" Value="#F8F9FA" /> <Setter Property="Foreground" Value="#000000" />
+        <Setter Property="Background" Value="#F8F9FA" />
+        <Setter Property="Foreground" Value="#000000" />
     </Style>
     <Style Selector="Button.btn-dark">
-        <Setter Property="Background" Value="#000000" /> <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="Background" Value="#000000" />
+        <Setter Property="Foreground" Value="#FFFFFF" />
     </Style>
 </Styles>

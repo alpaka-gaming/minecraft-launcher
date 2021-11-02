@@ -2,43 +2,42 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:Launcher"
              x:Class="Launcher.App">
-    
+
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <local:ViewLocator />
     </Application.DataTemplates>
-    
+  
     <Application.Resources>
-        <!--<SolidColorBrush x:Key="Background">#242424</SolidColorBrush>-->
-        <Color x:Key="Background">#242424</Color>
-        <FontFamily x:Key="NotoSans-Bold">/Assets/Fonts/NotoSans-Bold.tff</FontFamily>
-        <FontFamily x:Key="NotoSans-BoldItalic">/Assets/Fonts/NotoSans-BoldItalic.tff</FontFamily>
-        <FontFamily x:Key="NotoSans-Italic">/Assets/Fonts/NotoSans-Italic.tff</FontFamily>
-        <FontFamily x:Key="NotoSans-Regular">/Assets/Fonts/NotoSans-Regular.tff</FontFamily>
+        <!-- Fonts -->
+        <FontFamily x:Key="NotoSans">/Assets/Fonts/NotoSans-*.ttf#Noto Sans</FontFamily>
+        <FontFamily x:Key="Ubuntu">/Assets/Fonts/Ubuntu-*.ttf#Ubuntu</FontFamily>
+        
+        <!-- Colors -->
+        <SolidColorBrush x:Key="primary">#0d6efd</SolidColorBrush>
+        <SolidColorBrush x:Key="secondary">#6c757d</SolidColorBrush>
+        <SolidColorBrush x:Key="success">#198754</SolidColorBrush>
+        <SolidColorBrush x:Key="info">#dc3545</SolidColorBrush>
+        <SolidColorBrush x:Key="warning">#ffc107</SolidColorBrush>
+        <SolidColorBrush x:Key="danger">#0dcaf0</SolidColorBrush>
+        <SolidColorBrush x:Key="light">#f8f9fa</SolidColorBrush>
+        <SolidColorBrush x:Key="dark">#212529</SolidColorBrush>
+        <SolidColorBrush x:Key="body">#000</SolidColorBrush>
+        <SolidColorBrush x:Key="muted">#6c757d</SolidColorBrush>
+        <SolidColorBrush x:Key="white">#fff</SolidColorBrush>
+        
+        <!-- Theme -->
+        <Color x:Key="tint">#212529</Color>
+        <SolidColorBrush x:Key="background">Transparent</SolidColorBrush>
     </Application.Resources>
 
     <Application.Styles>
-        <FluentTheme Mode="Dark"/>
+        <FluentTheme Mode="Dark" />
+        
+        <Style Selector=":is(TemplatedControl)">
+            <Setter Property="FontFamily" Value="{StaticResource Ubuntu}" />
+        </Style>
         
         <StyleInclude Source="/Styles/Bootstrap.axaml" />
-        
-        <!-- Fonts -->
-        <Style Selector="Label">
-            <Setter Property="FontFamily" Value="{StaticResource NotoSans-Bold}" />
-        </Style>
-        <Style Selector="TextBox">
-            <Setter Property="FontFamily" Value="{StaticResource NotoSans-Bold}" />
-        </Style>
-        <Style Selector="TextBlock">
-            <Setter Property="FontFamily" Value="{StaticResource NotoSans-Bold}" />
-        </Style>
-        <Style Selector="ComboBox">
-            <Setter Property="FontFamily" Value="{StaticResource NotoSans-Bold}" />
-        </Style>
-        <Style Selector="Button">
-            <Setter Property="FontFamily" Value="{StaticResource NotoSans-Bold}" />
-        </Style>
-        
-    
     </Application.Styles>
-    
+
 </Application>
