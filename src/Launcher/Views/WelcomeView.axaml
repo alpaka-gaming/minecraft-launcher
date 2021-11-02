@@ -17,7 +17,7 @@
             <Label>Lisiados</Label>
         </Panel>
         <Panel Grid.Row="0" Grid.Column="1">
-            <Image Source="../Assets/Background.png" VerticalAlignment="Top" />
+            <Image Source="../Assets/Images/Background.png" VerticalAlignment="Top" />
             <Button Background="#0a8d48" HorizontalAlignment="Center" Width="100" HorizontalContentAlignment="Center">JUGAR</Button>
         </Panel>
     </Grid>
