@@ -6,8 +6,8 @@
     </PropertyGroup>
     <ItemGroup>
         <Folder Include="Assets\Fonts" />
-        <Folder Include="Models\" />
         <AvaloniaResource Include="Assets\**" />
+        <Folder Include="Models" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.7" />
@@ -50,5 +50,8 @@
         <DependentUpon>MainWindow.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
 </Project>

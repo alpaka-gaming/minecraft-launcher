@@ -11,6 +11,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Dialogs;
 using Avalonia.ReactiveUI;
+using Infrastructure.Models;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 
@@ -18,14 +19,15 @@ namespace Launcher
 {
     public static class Program
     {
-    
         public static bool IsSingleViewLifetime =>
             Environment.GetCommandLineArgs()
                 .Any(a => a == "--fbdev" || a == "--drm");
-        
+
         internal static IConfiguration Configuration { get; set; } = null!;
         internal static HttpClient HttpClient { get; set; } = null!;
-        
+
+        public static MinecraftOptions MinecraftOptions { get; set; } = null!;
+
         // Initialization code. Don't use any Avalonia, third-party APIs or any
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
         // yet and stuff might break.
@@ -33,7 +35,7 @@ namespace Launcher
         private static int Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
-            
+
             Configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -43,8 +45,12 @@ namespace Launcher
                 .AddEnvironmentVariables()
                 .AddCommandLine(args)
                 .Build();
-            HttpClient = new HttpClient();
+
+            MinecraftOptions = new MinecraftOptions();
+            Configuration.Bind("Minecraft", MinecraftOptions);
             
+            HttpClient = new HttpClient();
+
             double GetScaling()
             {
                 var idx = Array.IndexOf(args, "--scaling");
@@ -58,7 +64,7 @@ namespace Launcher
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(Configuration)
                 .CreateLogger();
-            
+
             try
             {
                 if (args.Contains("--wait-for-attach"))
@@ -102,7 +108,7 @@ namespace Launcher
         {
             if (Log.Logger != null)
             {
-                var ex = (Exception)e.ExceptionObject;
+                var ex = (Exception) e.ExceptionObject;
                 Log.Fatal(ex, "The Application failed to start");
                 await Task.Yield();
                 //await MessageBox.Show((Window)(Application.Current as PrismApplication)?.MainWindow!, ex.Message, "Error", MessageBox.MessageBoxButtons.Ok);
@@ -117,7 +123,7 @@ namespace Launcher
                 while (true)
                     Console.ReadKey(true);
                 // ReSharper disable once FunctionNeverReturns
-            }) { IsBackground = true }.Start();
+            }) {IsBackground = true}.Start();
         }
 
         public static bool IsProduction()
@@ -133,8 +139,8 @@ namespace Launcher
             AppBuilder
                 .Configure<App>()
                 .UsePlatformDetect()
-                .With(new X11PlatformOptions { EnableMultiTouch = true, UseDBusMenu = true })
-                .With(new Win32PlatformOptions { EnableMultitouch = true, AllowEglInitialization = true })
+                .With(new X11PlatformOptions {EnableMultiTouch = true, UseDBusMenu = true})
+                .With(new Win32PlatformOptions {EnableMultitouch = true, AllowEglInitialization = true})
                 .UseSkia()
                 .UseReactiveUI()
                 .UseManagedSystemDialogs()

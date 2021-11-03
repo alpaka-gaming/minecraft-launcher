@@ -8,6 +8,10 @@
     </Application.DataTemplates>
   
     <Application.Resources>
+        
+        <!-- Page -->
+        <Thickness x:Key="PageMargin">0</Thickness>
+        
         <!-- Fonts -->
         <FontFamily x:Key="NotoSans">/Assets/Fonts/NotoSans-*.ttf#Noto Sans</FontFamily>
         <FontFamily x:Key="Ubuntu">/Assets/Fonts/Ubuntu-*.ttf#Ubuntu</FontFamily>
@@ -16,9 +20,9 @@
         <SolidColorBrush x:Key="primary">#0d6efd</SolidColorBrush>
         <SolidColorBrush x:Key="secondary">#6c757d</SolidColorBrush>
         <SolidColorBrush x:Key="success">#198754</SolidColorBrush>
-        <SolidColorBrush x:Key="info">#dc3545</SolidColorBrush>
+        <SolidColorBrush x:Key="info">#0dcaf0</SolidColorBrush>
         <SolidColorBrush x:Key="warning">#ffc107</SolidColorBrush>
-        <SolidColorBrush x:Key="danger">#0dcaf0</SolidColorBrush>
+        <SolidColorBrush x:Key="danger">#dc3545</SolidColorBrush>
         <SolidColorBrush x:Key="light">#f8f9fa</SolidColorBrush>
         <SolidColorBrush x:Key="dark">#212529</SolidColorBrush>
         <SolidColorBrush x:Key="body">#000</SolidColorBrush>
@@ -38,6 +42,9 @@
         </Style>
         
         <StyleInclude Source="/Styles/Bootstrap.axaml" />
+        <StyleInclude Source="/Styles/SideBar.axaml" />
+        <StyleInclude Source="/Styles/Animations.axaml" />
+        
     </Application.Styles>
 
 </Application>

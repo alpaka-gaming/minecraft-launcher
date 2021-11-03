@@ -4,33 +4,60 @@
              xmlns:vm="clr-namespace:Launcher.ViewModels"
              xmlns:prism="http://prismlibrary.com/"
              x:Class="Launcher.Views.WelcomeView"
-             MinWidth="640" MinHeight="480" Margin="32"
+             MinWidth="640" MinHeight="480"
              prism:ViewModelLocator.AutoWireViewModel="true">
+
     <UserControl.Resources>
         <converters:BoolInverterConverter x:Key="BoolInverterConverter" />
     </UserControl.Resources>
+
     <Design.DataContext>
         <vm:WelcomeViewModel />
     </Design.DataContext>
-    
-    <UserControl.Styles>
-        <Style Selector="Image.logo">
-            <Style.Animations>
-                <Animation FillMode="Forward" Duration="0:0:2.0" Easing="SineEaseInOut">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="Width" Value="200"/>
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="Width" Value="400"/>
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-    </UserControl.Styles>
-    
-    <StackPanel Orientation="Vertical">
-        <Image Classes="logo" Source="{SvgImage /Assets/Images/Minecraft_Platform-Logo.svg}" Stretch="Fill" Width="200" MaxWidth="400" Margin="16" />
-        <!-- <Label Classes="h1 text-primary text-center">Lisiados</Label> -->
-    </StackPanel>
-    
+
+    <Panel>
+        <DockPanel HorizontalAlignment="Stretch">
+            <ExperimentalAcrylicBorder DockPanel.Dock="Left" Width="200">
+                <ExperimentalAcrylicBorder.Material>
+                    <ExperimentalAcrylicMaterial TintColor="Black" MaterialOpacity="0.85" TintOpacity="1" />
+                </ExperimentalAcrylicBorder.Material>
+                <!-- <AutoCompleteBox HorizontalAlignment="Stretch" Margin="20 40 20 0" Watermark="Search" Items="{Binding SearchItems}" /> -->
+                <StackPanel Background="Transparent" HorizontalAlignment="Stretch">
+                    <Label Margin="20" Classes="h1" HorizontalContentAlignment="Center">Versiones</Label>
+                    <ListBox Background="Transparent" HorizontalAlignment="Stretch" Items="{Binding Versions }">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="5 0">
+                                    <Label Classes="fs-6" Width="100" Margin="0 0 5 0">
+                                        <TextBlock Text="{Binding Path=Name}" />
+                                    </Label>
+                                    <Label Classes="bg-danger text-white fs-6" Margin="5 0"
+                                           HorizontalContentAlignment="Center" 
+                                           VerticalContentAlignment="Center"  
+                                           IsVisible="{Binding IsBeta}" Width="50">
+                                        BETA
+                                    </Label>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </ExperimentalAcrylicBorder>
+            <ExperimentalAcrylicBorder IsHitTestVisible="False">
+                <ExperimentalAcrylicBorder.Material>
+                    <ExperimentalAcrylicMaterial TintColor="#222222" MaterialOpacity="0.85" TintOpacity="1" />
+                </ExperimentalAcrylicBorder.Material>
+                <!-- <TextBlock Text="{Binding #TabControl.SelectedItem.Header}" Margin="40 20" FontSize="32" FontWeight="Light" /> -->
+            </ExperimentalAcrylicBorder>
+        </DockPanel>
+
+        <TabControl x:Name="TabControl" Classes="sidebar" />
+
+        <StackPanel Orientation="Vertical">
+            <Image Classes="logo" Source="{SvgImage /Assets/Images/Minecraft_Platform-Logo.svg}" Stretch="Fill" Width="200" MaxWidth="400" Margin="232 32 32 32" />
+            <!-- <Label Classes="h1 text-primary text-center">Lisiados</Label> -->
+        </StackPanel>
+
+    </Panel>
+
 </UserControl>

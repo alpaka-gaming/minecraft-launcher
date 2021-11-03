@@ -1,0 +1,15 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style Selector="Image.logo">
+        <Style.Animations>
+            <Animation FillMode="Forward" Duration="0:0:2.0" Easing="SineEaseInOut">
+                <KeyFrame Cue="0%">
+                    <Setter Property="Width" Value="200" />
+                </KeyFrame>
+                <KeyFrame Cue="100%">
+                    <Setter Property="Width" Value="400" />
+                </KeyFrame>
+            </Animation>
+        </Style.Animations>
+    </Style>
+</Styles>

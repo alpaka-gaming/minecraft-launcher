@@ -4,7 +4,7 @@ using Avalonia.Markup.Xaml;
 
 namespace Launcher
 {
-    public class MainWindow : Window
+    public class MainWindow : FluentWindow
     {
         public MainWindow()
         {

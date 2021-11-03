@@ -1,16 +1,19 @@
 ﻿using System;
-using System.Drawing;
-using System.Reactive;
-using System.Timers;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Avalonia;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
 using Avalonia.Platform;
+using Infrastructure.Interfaces;
+using Infrastructure.Models;
 using Launcher.Views;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Prism.Regions;
 using ReactiveUI;
 using Bitmap = Avalonia.Media.Imaging.Bitmap;
+using Timer = System.Timers.Timer;
 
 namespace Launcher.ViewModels
 {
@@ -18,19 +21,22 @@ namespace Launcher.ViewModels
     {
         public MainWindowViewModel()
         {
-            getRandomBackground();
         }
 
         public MainWindowViewModel(IRegionManager regionManager, ILoggerFactory loggerFactory) : base(regionManager, loggerFactory)
         {
-            _regionManager.RequestNavigate("MainRegion", nameof(WelcomeView));
+            /* Background */
             var timer = new Timer(30000);
-            timer.Elapsed += (sender, args) => getRandomBackground();
-            getRandomBackground();
+            timer.Elapsed += (_, _) => getRandomBackground();
             timer.Start();
+            getRandomBackground();
+
+            /* Initial View */
+            // _regionManager.RequestNavigate("MainRegion", nameof(WelcomeView));
         }
 
-        private void getRandomBackground(object? state = null)
+
+        private void getRandomBackground()
         {
             var start = 1;
             var end = 7;
@@ -42,6 +48,28 @@ namespace Launcher.ViewModels
             var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
             Background = new Bitmap(assets.Open(new Uri($"avares://Launcher/Assets/Images/Backgrounds/bg{index}.jpg")));
         }
+
+
+        // private async void InvokeDownload(Game v)
+        // {
+        //     CancellationTokenSource cancelSource = new CancellationTokenSource();
+        //
+        //     var dlPath = "Downloads";
+        //     var versions = await _downloader.GetVersionsAsync();
+        //     await _downloader.Download(v.UUID, "1", dlPath, (_, _) =>
+        //     {
+        //         // if (v.StateChangeInfo.VersionState != VersionState.Downloading)
+        //         // {
+        //         //     Debug.WriteLine("Actual download started");
+        //         //     v.StateChangeInfo.VersionState = VersionState.Downloading;
+        //         //     if (total.HasValue)
+        //         //         v.StateChangeInfo.TotalSize = total.Value;
+        //         // }
+        //         //
+        //         // v.StateChangeInfo.DownloadedBytes = current;
+        //     }, cancelSource.Token);
+        // }
+
 
         private Bitmap _background = null!;
 

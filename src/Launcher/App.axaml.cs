@@ -5,6 +5,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using DryIoc;
+using Infrastructure;
 using Launcher.ViewModels;
 using Launcher.Views;
 using Microsoft.Extensions.Logging;
@@ -50,8 +51,12 @@ namespace Launcher
             containerRegistry.RegisterInstance(Program.Configuration);
             containerRegistry.RegisterInstance(Program.HttpClient);
 
+            containerRegistry.AddInfrastructure();
+            
+
             // navigations
             containerRegistry.RegisterForNavigation<MainWindow, MainWindowViewModel>();
+            containerRegistry.RegisterForNavigation<WelcomeView, WelcomeViewModel>();
 
             // create logger factory
             ILoggerFactory loggerFactory = new LoggerFactory();
