@@ -19,24 +19,27 @@ namespace Launcher.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        private IAssetLoader _assetLoader;
+
         public MainWindowViewModel()
         {
+            _assetLoader = null!;
         }
 
         public MainWindowViewModel(IRegionManager regionManager, ILoggerFactory loggerFactory) : base(regionManager, loggerFactory)
         {
+            _assetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
+
             /* Background */
             var timer = new Timer(30000);
-            timer.Elapsed += (_, _) => getRandomBackground();
+            timer.Elapsed += (_, _) => BackgroundInit();
             timer.Start();
-            getRandomBackground();
 
-            /* Initial View */
-            // _regionManager.RequestNavigate("MainRegion", nameof(WelcomeView));
+            BackgroundInit();
         }
 
 
-        private void getRandomBackground()
+        private void BackgroundInit()
         {
             var start = 1;
             var end = 7;
@@ -45,8 +48,7 @@ namespace Launcher.ViewModels
             if (index < start) index = start;
             else if (index > end) index = end;
 
-            var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-            Background = new Bitmap(assets.Open(new Uri($"avares://Launcher/Assets/Images/Backgrounds/bg{index}.jpg")));
+            Background = new Bitmap(_assetLoader.Open(new Uri($"avares://Launcher/Assets/Images/Backgrounds/bg{index}.jpg")));
         }
 
 
