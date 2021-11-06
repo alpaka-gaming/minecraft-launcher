@@ -8,6 +8,7 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
+            services.AddSingleton<IMusicPlayer, MusicPlayer>();
             services.AddSingleton<IDownloader, Downloader>();
             return services;
         }

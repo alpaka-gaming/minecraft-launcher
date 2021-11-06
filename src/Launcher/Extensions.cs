@@ -8,6 +8,7 @@ namespace Infrastructure
     {
         public static IContainerRegistry AddInfrastructure(this IContainerRegistry services)
         {
+            services.Register<IMusicPlayer, MusicPlayer>();
             services.Register<IDownloader, Downloader>();
             return services;
         }

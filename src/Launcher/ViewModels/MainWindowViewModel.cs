@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Platform;
-using Infrastructure.Interfaces;
-using Infrastructure.Models;
-using Launcher.Views;
-using Microsoft.Extensions.Configuration;
+using Infrastructure.Services;
 using Microsoft.Extensions.Logging;
 using Prism.Regions;
 using ReactiveUI;
@@ -36,8 +29,27 @@ namespace Launcher.ViewModels
             timer.Start();
 
             BackgroundInit();
+
+            MusicInit();
         }
 
+        private void MusicInit()
+        {
+            MainWindow.MusicPlayer = new MusicPlayer();
+            var music = _assetLoader.Open(new Uri($"avares://Launcher/Assets/Music/C418.mp3"));
+            MainWindow.MusicPlayer.Stopped += (sender, _) =>
+            {
+                try
+                {
+                    MainWindow.MusicPlayer?.Play(music);
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            };
+            MainWindow.MusicPlayer?.Play(music);
+        }
 
         private void BackgroundInit()
         {
