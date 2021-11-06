@@ -7,8 +7,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Dialogs;
 using Avalonia.ReactiveUI;
 using Infrastructure.Models;

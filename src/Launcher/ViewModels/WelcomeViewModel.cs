@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Infrastructure.Interfaces;
 using Infrastructure.Models;
-using Launcher.Views;
 using Microsoft.Extensions.Logging;
 using Prism.Regions;
 using ReactiveUI;

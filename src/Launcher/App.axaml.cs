@@ -2,14 +2,12 @@ using System;
 using System.Reflection;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using DryIoc;
 using Infrastructure;
 using Launcher.ViewModels;
 using Launcher.Views;
 using Microsoft.Extensions.Logging;
-using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -53,7 +51,6 @@ namespace Launcher
 
             containerRegistry.AddInfrastructure();
             
-
             // navigations
             containerRegistry.RegisterForNavigation<MainWindow, MainWindowViewModel>();
             containerRegistry.RegisterForNavigation<WelcomeView, WelcomeViewModel>();
