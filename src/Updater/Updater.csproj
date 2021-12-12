@@ -3,9 +3,6 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net6.0</TargetFramework>
-        <PublishSingleFile>true</PublishSingleFile>
-        <PublishTrimmed>true</PublishTrimmed>
-        <PublishReadyToRun>true</PublishReadyToRun>
         <ApplicationIcon>Icon.ico</ApplicationIcon>
         <Deterministic>false</Deterministic>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
