@@ -179,13 +179,20 @@ namespace Launcher
             args.Add($"--accessToken {_game.ActiveAccount.AccessToken}");
             args.Add($"--userType mojang");
             args.Add($"--versionType release");
+
+            args.Add($@"-cp C:\Users\ennerperez\AppData\Roaming\.minecraft\libraries\net\minecraftforge\forge\{_server.Versions["Minecraft"]}-{_server.Versions["Forge"]}\");
+
             args.Add($"--fml.forgeGroup net.minecraftforge");
+            args.Add($"--fml.mcpVersion 20210115.111550");
+
             var process = new Process()
             {
                 StartInfo = new ProcessStartInfo()
                 {
                     FileName = _java.JavaExecutable,
-                    Arguments = string.Join(" ", args.ToArray())
+                    Arguments = string.Join(" ", args.ToArray()),
+                    CreateNoWindow = false,
+                    WindowStyle = ProcessWindowStyle.Maximized
                 }
             };
             process.Start();
