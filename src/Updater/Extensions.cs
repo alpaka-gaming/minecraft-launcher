@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Updater
@@ -7,12 +8,10 @@ namespace Updater
     {
         public static async Task<long> GetLengthAsync(this string url)
         {
-            long length = 0;
-            var request = WebRequest.CreateHttp(url);
-            request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1";
-            request.Method = "HEAD";
-            using (var response = await request.GetResponseAsync())
-                length = response.ContentLength;
+            long length;
+            using (var client = new HttpClient())
+                using (var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
+                    length = long.Parse(response.Content.Headers.First(h => h.Key.Equals("Content-Length")).Value.First());
 
             return length;
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -71,7 +71,7 @@ namespace Updater
             Servicios.AddSingleton(Configuracion);
             Contenedor = Servicios.BuildServiceProvider();
             var factory = Contenedor.GetService<ILoggerFactory>();
-            Logger = factory.CreateLogger(typeof(Program));
+            if (factory != null) Logger = factory.CreateLogger(typeof(Program));
 
             // Execution
             MainAsync().GetAwaiter().GetResult();
@@ -93,7 +93,10 @@ namespace Updater
             if (!await ValidateProfile()) throw new OperationCanceledException("No se pudo validar el perfil.");
 
             var versionId = $"{Versions["Minecraft"]}-forge-{Versions["Forge"]}";
-            var profiles = Profiles.Where(m => m.Value.LastVersionId == versionId).OrderByDescending(m => m.Value.Created);
+            var profiles = Profiles.Where(m => m.Value.LastVersionId == versionId).OrderByDescending(m => m.Value.Created).ToArray();
+            if (profiles == null && !profiles.Any())
+                throw new OperationCanceledException($"No se pudo encontrar la versión requerida: {versionId}");
+            
             foreach (var profile in profiles)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -124,7 +127,7 @@ namespace Updater
                         {
                             if (File.Exists(localFolderPath))
                             {
-                                var localLength = new System.IO.FileInfo(localFolderPath).Length;
+                                var localLength = new FileInfo(localFolderPath).Length;
                                 var remoteLength = await urlTemp.GetLengthAsync();
 
                                 if (localLength != remoteLength)
@@ -225,7 +228,7 @@ namespace Updater
             return isServerOn;
         }
 
-        private static bool ValidateVersion()
+        private static void ValidateVersion()
         {
             if (Versions.ContainsKey("Updater"))
             {
@@ -235,8 +238,6 @@ namespace Updater
                     throw new InvalidOperationException("Debe descargar la ultima versión del updater.");
                 }
             }
-
-            return true;
         }
 
         private static async Task<bool> GetProfile()
@@ -302,14 +303,18 @@ namespace Updater
 
         private static async Task<bool> ValidateProfile()
         {
-            var profileFile = Path.Combine(GamePath, "launcher_profiles.json");
-            if (File.Exists(profileFile))
+            var profileFiles = new[] {"launcher_profiles.json", "launcher_profiles_microsoft_store.json"};
+            foreach (var item in profileFiles)
             {
-                var content = await File.ReadAllTextAsync(profileFile);
-                var profiles = JsonConvert.DeserializeObject<JObject>(content).Children().Where(m => m.Path == "profiles").ToList();
-                var value = profiles.First().First().ToString();
-                Profiles = JsonConvert.DeserializeObject<Dictionary<string, Profile>>(value);
-                return Profiles.Any();
+                var profileFile = Path.Combine(GamePath, item);
+                if (File.Exists(profileFile))
+                {
+                    var content = await File.ReadAllTextAsync(profileFile);
+                    var profiles = JsonConvert.DeserializeObject<JObject>(content).Children().Where(m => m.Path == "profiles").ToList();
+                    var value = profiles.First().First().ToString();
+                    Profiles = JsonConvert.DeserializeObject<Dictionary<string, Profile>>(value);
+                    return Profiles.Any();
+                }
             }
 
             return false;
@@ -338,10 +343,10 @@ namespace Updater
             var url = $"{Server}{folder}";
 
             var files = new List<string>();
-            var request = (HttpWebRequest) WebRequest.Create(url);
-            using (var response = (HttpWebResponse) request.GetResponse())
+            using (var client = new HttpClient())
             {
-                using (var reader = new StreamReader(response.GetResponseStream()))
+                var response = await client.GetStreamAsync(url);
+                using (var reader = new StreamReader(response))
                 {
                     var html = reader.ReadToEnd();
                     var doc = new HtmlDocument();
