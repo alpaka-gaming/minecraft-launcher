@@ -94,9 +94,9 @@ namespace Updater
 
             var versionId = $"{Versions["Minecraft"]}-forge-{Versions["Forge"]}";
             var profiles = Profiles.Where(m => m.Value.LastVersionId == versionId).OrderByDescending(m => m.Value.Created).ToArray();
-            if (profiles == null && !profiles.Any())
+            if (profiles == null || !profiles.Any())
                 throw new OperationCanceledException($"No se pudo encontrar la versión requerida: {versionId}");
-            
+
             foreach (var profile in profiles)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -106,6 +106,20 @@ namespace Updater
                 var gamePath = profile.Value.GameDir;
                 if (string.IsNullOrWhiteSpace(gamePath)) gamePath = Configuracion["AppSettings:GamePath"];
                 gamePath = Environment.ExpandEnvironmentVariables(gamePath);
+
+                var serverDatFile = Path.Combine(gamePath, "server.dat"); 
+                if (!File.Exists(serverDatFile))
+                {
+                    try
+                    {
+                        var urlTemp = $"{Server}server.dat";
+                        await urlTemp.DownloadFileAsync(serverDatFile);
+                    }
+                    catch (Exception)
+                    {
+                        // ignored
+                    }
+                }
 
                 var folders = new[] {"mods", "resourcepacks", "shaderpacks"};
                 foreach (var folder in folders)
@@ -235,7 +249,7 @@ namespace Updater
                 var minVersion = Versions["Updater"];
                 if (Version < minVersion)
                 {
-                    throw new InvalidOperationException("Debe descargar la ultima versión del updater.");
+                    throw new InvalidOperationException($"Debe descargar la ultima versión del updater en: {Environment.NewLine}https://github.com/lisiados-dev/minecraft-launcher/releases");
                 }
             }
         }
@@ -247,7 +261,7 @@ namespace Updater
             {
                 var tempFile = new FileInfo(Path.GetTempFileName());
                 var tempPath = tempFile.Directory?.FullName;
-                await $"{Server}/{Profile}.json".DownloadFileAsync(tempPath, tempFile.Name);
+                await $"{Server}{Profile}.json".DownloadFileAsync(tempPath, tempFile.Name);
                 var data = await File.ReadAllTextAsync(tempFile.FullName);
                 var definition = JsonConvert.DeserializeObject<JObject>(data);
 
@@ -325,7 +339,7 @@ namespace Updater
             Console.WriteLine();
             var tempFile = new FileInfo(Path.GetTempFileName());
             if (tempFile.Directory != null)
-                await $"{Server}/{Profile}.txt".DownloadFileAsync(tempFile.Directory.FullName, tempFile.Name);
+                await $"{Server}{Profile}.txt".DownloadFileAsync(tempFile.Directory.FullName, tempFile.Name);
             if (File.Exists(tempFile.FullName))
             {
                 var data = File.ReadAllLines(tempFile.FullName);
