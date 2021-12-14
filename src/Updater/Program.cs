@@ -28,7 +28,7 @@ namespace Updater
         #region AppSettings
 
         private static Uri Server => new(Configuracion["AppSettings:Url"]);
-        private static string GamePath => Environment.ExpandEnvironmentVariables(Configuracion["AppSettings:GamePath"]);
+        private static string GamePath => Path.Combine(OperatingSystem.IsWindows() ? Environment.ExpandEnvironmentVariables("%appdata%") : Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".minecraft");
         private static string Profile => Configuracion["AppSettings:Profile"];
 
         private static Version Version => Assembly.GetExecutingAssembly().GetName().Version;
@@ -107,10 +107,10 @@ namespace Updater
                 Console.ResetColor();
 
                 var gamePath = profile.Value.GameDir;
-                if (string.IsNullOrWhiteSpace(gamePath)) gamePath = Configuracion["AppSettings:GamePath"];
+                if (string.IsNullOrWhiteSpace(gamePath)) gamePath = GamePath;
                 gamePath = Environment.ExpandEnvironmentVariables(gamePath);
 
-                var serverDatFile = Path.Combine(gamePath, "server.dat"); 
+                var serverDatFile = Path.Combine(gamePath, "server.dat");
                 if (!File.Exists(serverDatFile))
                 {
                     try
