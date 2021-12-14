@@ -96,9 +96,13 @@ namespace Updater
             if (!await ValidateProfile()) throw new OperationCanceledException("No se pudo validar el perfil.");
 
             var versionId = $"{Versions["Minecraft"]}-forge-{Versions["Forge"]}";
+            var versionKey = $"{Versions["Minecraft"]}-{Versions["Forge"]}";
             var profiles = Profiles.Where(m => m.Value.LastVersionId == versionId).OrderByDescending(m => m.Value.Created).ToArray();
             if (profiles == null || !profiles.Any())
-                throw new OperationCanceledException($"No se pudo encontrar la versión requerida: {versionId}");
+            {
+                var forgeUrl = $"https://maven.minecraftforge.net/net/minecraftforge/forge/{versionKey}/forge-{versionKey}-installer.jar";
+                throw new OperationCanceledException($"No se pudo encontrar la versión requerida: {versionId}{Environment.NewLine}{forgeUrl}");
+            }
 
             foreach (var profile in profiles)
             {
@@ -252,7 +256,8 @@ namespace Updater
                 var minVersion = Versions["Updater"];
                 if (Version < minVersion)
                 {
-                    throw new InvalidOperationException($"Debe descargar la ultima versión del updater en: {Environment.NewLine}https://github.com/lisiados-dev/minecraft-launcher/releases");
+                    var updaterUrl = "https://github.com/lisiados-dev/minecraft-launcher/releases";
+                    throw new InvalidOperationException($"Debe descargar la última versión del updater en:{Environment.NewLine}{updaterUrl}");
                 }
             }
         }
