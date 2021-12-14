@@ -11,6 +11,10 @@
         <Nullable>disable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DebugType>none</DebugType>
+    </PropertyGroup>
+
     <ItemGroup>
       <PackageReference Include="Flurl.Http" Version="3.2.0" />
       <PackageReference Include="HtmlAgilityPack" Version="1.11.39" />
@@ -35,10 +39,6 @@
       </Content>
       <None Remove="banner.txt" />
       <None Remove="appsettings.Development.json" />
-      <Content Include="appsettings.Development.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        <DependentUpon>appsettings.json</DependentUpon>
-      </Content>
     </ItemGroup>
 
 </Project>
