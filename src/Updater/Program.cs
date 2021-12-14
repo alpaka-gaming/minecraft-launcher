@@ -11,21 +11,19 @@ using Flurl.Http;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NLog.Extensions.Logging;
+using Serilog;
 using Updater.Models;
 
 namespace Updater
 {
     internal class Program
     {
-        public static IConfiguration Configuracion { get; set; }
-        public static ILogger Logger { get; set; }
+        public static IConfiguration Configuracion { get; private set; }
 
-        public static ServiceCollection Servicios { get; set; }
-        public static ServiceProvider Contenedor { get; set; }
+        public static ServiceCollection Servicios { get; private set; }
+        public static ServiceProvider Contenedor { get; private set; }
 
         #region AppSettings
 
@@ -61,21 +59,26 @@ namespace Updater
 #endif
                 .Build();
 
-            Servicios = new ServiceCollection();
-            Servicios.AddLogging(builder =>
-            {
-                builder.SetMinimumLevel(LogLevel.Information);
-                builder.AddNLog(new NLogLoggingConfiguration(Configuracion.GetSection("NLog")));
-            }).AddOptions();
+            // Initialize Logger
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(Configuracion)
+                .CreateLogger();
 
+            Servicios = new ServiceCollection();
             Servicios.AddSingleton(Configuracion);
             Contenedor = Servicios.BuildServiceProvider();
-            var factory = Contenedor.GetService<ILoggerFactory>();
-            if (factory != null) Logger = factory.CreateLogger(typeof(Program));
 
             // Execution
-            MainAsync().GetAwaiter().GetResult();
+            try
+            {
+                MainAsync().GetAwaiter().GetResult();
+            }
+            catch (Exception e)
+            {
+                UnhandledException(e, new UnhandledExceptionEventArgs(e, true));
+            }
 
+            Console.WriteLine("");
             Console.WriteLine("Presione cualquier tecla para finalizar.");
             Console.ReadKey();
         }
@@ -186,7 +189,7 @@ namespace Updater
                             Console.Write($"[ERROR]");
                             Console.WriteLine();
                             Console.ResetColor();
-                            Logger.LogError(e, e.Message);
+                            Log.Logger.Error(e, e.Message);
                         }
                     }
                 }
@@ -205,7 +208,7 @@ namespace Updater
             }
             catch (Exception e)
             {
-                Logger.LogError(e, e.Message);
+                Log.Logger.Error(e, e.Message);
                 return false;
             }
         }
@@ -278,7 +281,7 @@ namespace Updater
             }
             catch (Exception e)
             {
-                Logger.LogError(e, e.Message);
+                Log.Logger.Error(e, e.Message);
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write(" [ERROR]");
@@ -294,6 +297,7 @@ namespace Updater
             await Task.Yield();
 
             Console.Write("Obteniendo ruta del juego:");
+
             var installedPath = Environment.ExpandEnvironmentVariables(GamePath);
 
             var isPathValid = Directory.Exists(installedPath);
@@ -380,7 +384,7 @@ namespace Updater
         private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var ex = (Exception) e.ExceptionObject;
-            Logger.LogError(ex, ex.Message);
+            Log.Logger.Error(ex, ex.Message);
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(ex.Message);
