@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyCompany("Lisiados")]
-[assembly: AssemblyProduct("Lisiados Updater")]
-[assembly: AssemblyCopyright("Copyright © 2021")]
-[assembly: AssemblyTrademark("Lisiados")]
+[assembly: AssemblyCompany("Alpaka")]
+[assembly: AssemblyProduct("Alpaka Updater")]
+[assembly: AssemblyCopyright("Copyright © 2022")]
+[assembly: AssemblyTrademark("Alpaka")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyConfiguration("")]
 
@@ -20,8 +20,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Lisiados Updater")]
-[assembly: AssemblyDescription("Lisiados Updater")]
+[assembly: AssemblyTitle("Alpaka Updater")]
+[assembly: AssemblyDescription("Alpaka Updater")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("7DA994D7-5C63-4B50-A420-CEB4D00C1375")]
@@ -37,5 +37,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.2.0.*")]
-[assembly: AssemblyFileVersion("1.2.0")]
+[assembly: AssemblyVersion("1.3.0.*")]
+[assembly: AssemblyFileVersion("1.3.0")]

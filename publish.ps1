@@ -1,5 +1,5 @@
-cd src
 dotnet restore
+cd src
 
 dotnet publish -r win-x64 -p:PublishSingleFile=true --self-contained true -c Release --output ../publish/win-x64
 cd ../publish/win-x64

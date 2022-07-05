@@ -27,7 +27,7 @@ namespace Updater
 
         #region AppSettings
 
-        private static Uri Server => new(Configuracion["AppSettings:Url"]);
+        private static Uri Server => new(Configuracion["AppSettings:Server"]);
         private static string GamePath => Path.Combine(OperatingSystem.IsWindows() ? Environment.ExpandEnvironmentVariables("%appdata%") : Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".minecraft");
         private static string Profile => Configuracion["AppSettings:Profile"];
 
@@ -114,12 +114,12 @@ namespace Updater
                 if (string.IsNullOrWhiteSpace(gamePath)) gamePath = GamePath;
                 gamePath = Environment.ExpandEnvironmentVariables(gamePath);
 
-                var serverDatFile = Path.Combine(gamePath, "server.dat");
+                var serverDatFile = Path.Combine(gamePath, "servers.dat");
                 if (!File.Exists(serverDatFile))
                 {
                     try
                     {
-                        var urlTemp = $"{Server}server.dat";
+                        var urlTemp = $"{Server}minecraft/profiles/{Profile}/servers.dat";
                         await urlTemp.DownloadFileAsync(serverDatFile);
                     }
                     catch (Exception)
@@ -135,10 +135,10 @@ namespace Updater
                     Console.WriteLine($"=> Procesando {folder}...");
                     Console.ResetColor();
 
-                    var modFiles = await GetFiles(folder);
+                    var modFiles = await GetFiles(folder, versionId);
                     foreach (var item in modFiles)
                     {
-                        var urlTemp = $"{Server}{folder}/{item}";
+                        var urlTemp = $"{Server}minecraft/downloads/{Profile}/{versionId}/{folder}/{item}";
                         var localFolderPath = Path.Combine(gamePath, folder, item);
                         var jarFile = Path.ChangeExtension(localFolderPath, ".jar");
                         var zipFile = Path.ChangeExtension(localFolderPath, ".zip");
@@ -256,7 +256,7 @@ namespace Updater
                 var minVersion = Versions["Updater"];
                 if (Version < minVersion)
                 {
-                    var updaterUrl = "https://github.com/lisiados-dev/minecraft-launcher/releases";
+                    var updaterUrl = "https://github.com/alpaka-gaming/minecraft-launcher/releases";
                     throw new InvalidOperationException($"Debe descargar la última versión del updater en:{Environment.NewLine}{updaterUrl}");
                 }
             }
@@ -269,7 +269,7 @@ namespace Updater
             {
                 var tempFile = new FileInfo(Path.GetTempFileName());
                 var tempPath = tempFile.Directory?.FullName;
-                await $"{Server}{Profile}.json".DownloadFileAsync(tempPath, tempFile.Name);
+                await $"{Server}minecraft/profiles/{Profile}/versions.json".DownloadFileAsync(tempPath, tempFile.Name);
                 var data = await File.ReadAllTextAsync(tempFile.FullName);
                 var definition = JsonConvert.DeserializeObject<JObject>(data);
 
@@ -348,7 +348,7 @@ namespace Updater
             Console.WriteLine();
             var tempFile = new FileInfo(Path.GetTempFileName());
             if (tempFile.Directory != null)
-                await $"{Server}{Profile}.txt".DownloadFileAsync(tempFile.Directory.FullName, tempFile.Name);
+                await $"{Server}minecraft/profiles/{Profile}/motd.txt".DownloadFileAsync(tempFile.Directory.FullName, tempFile.Name);
             if (File.Exists(tempFile.FullName))
             {
                 var data = File.ReadAllLines(tempFile.FullName);
@@ -359,11 +359,11 @@ namespace Updater
             Console.WriteLine();
         }
 
-        private static async Task<List<string>> GetFiles(string folder)
+        private static async Task<List<string>> GetFiles(string folder, string versionId)
         {
             var fixString = new Func<string, string>(m => { return HttpUtility.UrlDecode(m.Replace("+", "%2b")); });
 
-            var url = $"{Server}{folder}";
+            var url = $"{Server}minecraft/downloads/{Profile}/{versionId}/{folder}";
 
             var files = new List<string>();
             using (var client = new HttpClient())

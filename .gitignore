@@ -1,15 +1,21 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,rider,dotnetcore,windows,macos
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,visualstudiocode,rider,dotnetcore,windows,macos
+# Created by https://www.toptal.com/developers/gitignore/api/rider,linux,macos,windows,visualstudio,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=rider,linux,macos,windows,visualstudio,visualstudiocode
 
-### DotnetCore ###
-# .NET Core build folders
-bin/
-obj/
+### Linux ###
+*~
 
-# Common node modules locations
-/node_modules
-/wwwroot/node_modules
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
 
 ### macOS ###
 # General
@@ -50,6 +56,9 @@ Temporary Items
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+
+# AWS User-specific
+.idea/**/aws.xml
 
 # Generated files
 .idea/**/contentModel.xml
@@ -114,10 +123,17 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 ### VisualStudioCode ###
+.vscode
 .vscode/*
+**/.vscode
+!.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
+!.vscode/extensions.json
 *.code-workspace
+
+# Local History for Visual Studio Code
+.history/
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
@@ -184,6 +200,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+[Bb]uild/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -243,6 +260,7 @@ StyleCopReport.xml
 *.tmp_proj
 *_wpftmp.csproj
 *.log
+*.tlog
 *.vspscc
 *.vssscc
 .builds
@@ -295,7 +313,9 @@ _TeamCity*
 !.axoCover/settings.json
 
 # Coverlet is a free, cross platform Code Coverage Tool
-coverage*[.json, .xml, .info]
+coverage*.json
+coverage*.xml
+coverage*.info
 
 # Visual Studio code coverage results
 *.coverage
@@ -356,6 +376,9 @@ PublishScripts/
 *.nuget.props
 *.nuget.targets
 
+# Nuget personal access tokens and Credentials
+nuget.config
+
 # Microsoft Azure Build Output
 csx/
 *.build.csdef
@@ -382,7 +405,6 @@ _pkginfo.txt
 # Others
 ClientBin/
 ~$*
-*~
 *.dbmdl
 *.dbproj.schemaview
 *.jfm
@@ -467,8 +489,8 @@ __pycache__/
 *.pyc
 
 # Cake - Uncomment if you are using it
-# tools/**
-# !tools/packages.config
+tools/**
+!tools/packages.config
 
 # Tabs Studio
 *.tss
@@ -512,6 +534,47 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,rider,dotnetcore,windows,macos
-src/.idea
-build
+# VS Code files for those working on multiple tools
+
+# Local History for Visual Studio Code
+
+# Windows Installer files from build outputs
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+### VisualStudio Patch ###
+# Additional files built by Visual Studio
+
+# LibraryManager
+**/lib
+
+# BuildBundlerMinifier
+*.min.*
+*.map
+
+# SQLite files
+*.db
+*.sqlite3
+*.sqlite
+*.db-journal
+*.sqlite3-journal
+*.sqlite-journal
+*.db-shm
+*.db-wal
+
+# End of https://www.toptal.com/developers/gitignore/api/rider,linux,macos,windows,visualstudio,visualstudiocode
+
+# Specials
+*.zip
+archives
+package-lock.json
+*.private.env.json
+
+#Extras
+**/bootstrap.css
+**/Data
+
+# SpecFlow
+*.feature.cs
