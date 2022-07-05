@@ -2,8 +2,8 @@ name: Build
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - v*
 
 jobs:
   build:
@@ -20,3 +20,43 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
+        
+      - name: Restore
+        run: dotnet restore
+        
+      - name: Publish (win-x64)
+        run: dotnet publish -r win-x64 -p:PublishSingleFile=true --self-contained true -c Release --output publish/win-x64
+        
+      - uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r publish/updater_win-x64.zip publish/win-x64
+        
+      - name: Publish (osx-x64)
+        run: dotnet publish -r osx-x64 -p:PublishSingleFile=true --self-contained true -c Release --output publish/osx-x64
+        
+      - uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r publish/updater_osx-x64.zip publish/osx-x64
+        
+      - name: Publish (linux-x64)
+        run: dotnet publish -r linux-x64 -p:PublishSingleFile=true --self-contained true -c Release --output publish/linux-x64
+        
+      - uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r publish/updater_linux-x64.zip publish/linux-x64
+        
+      - name: Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          path: publish/*.zip
+          if-no-files-found: error
+          
+      - name: Release
+        uses: ncipollo/release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          draft: false
+          prerelease: false
+          bodyFile: CHANGELOG.md
+          artifacts: "publish/*.zip"
