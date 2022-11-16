@@ -130,6 +130,7 @@ namespace Updater
                     Console.ResetColor();
 
                     var modFiles = await GetFiles(folder, versionPath);
+                    modFiles = modFiles.Where(m => m.StartsWith("..")).ToList();
                     foreach (var item in modFiles)
                     {
                         var urlTemp = $"{Server}minecraft/downloads/{Profile}/{versionPath}/{folder}/{item}";
@@ -203,6 +204,10 @@ namespace Updater
                 var ping = new Ping();
                 var result = ping.Send(Server.Host);
                 return (result != null && result.Status == IPStatus.Success);
+            }
+            catch (PlatformNotSupportedException)
+            {
+                return true;
             }
             catch (Exception e)
             {
