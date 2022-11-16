@@ -204,6 +204,10 @@ namespace Updater
                 var result = ping.Send(Server.Host);
                 return (result != null && result.Status == IPStatus.Success);
             }
+            catch (PlatformNotSupportedException)
+            {
+                return true;
+            }
             catch (Exception e)
             {
                 Log.Logger.Error(e, e.Message);
