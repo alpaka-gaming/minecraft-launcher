@@ -95,19 +95,13 @@ namespace Updater
 
             if (!await ValidateProfile()) throw new OperationCanceledException("No se pudo validar el perfil.");
 
-            var versionId = $"{Versions["Minecraft"]}-forge-{Versions["Forge"]}";
-            var versionKey = $"{Versions["Minecraft"]}-{Versions["Forge"]}";
-            var profiles = Profiles.Where(m => m.Value.LastVersionId == versionId).OrderByDescending(m => m.Value.Created).ToArray();
-            if (profiles == null || !profiles.Any())
-            {
-                var forgeUrl = $"https://maven.minecraftforge.net/net/minecraftforge/forge/{versionKey}/forge-{versionKey}-installer.jar";
-                throw new OperationCanceledException($"No se pudo encontrar la versión requerida: {versionId}{Environment.NewLine}{forgeUrl}");
-            }
-
+            var profiles = Profiles.Where(m => !string.IsNullOrWhiteSpace(m.Value.Toolchain)).OrderByDescending(m => m.Value.Created);
             foreach (var profile in profiles)
             {
+                var versionPath = $"{Versions["Minecraft"]}-{profile.Value.Toolchain}-{Versions[profile.Value.Toolchain]}".ToLowerInvariant();
+
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"Perfil: {profile.Value.Name} ({versionId})");
+                Console.WriteLine($"Perfil: {profile.Value.Name} ({Versions[profile.Value.Toolchain]})");
                 Console.ResetColor();
 
                 var gamePath = profile.Value.GameDir;
@@ -135,10 +129,10 @@ namespace Updater
                     Console.WriteLine($"=> Procesando {folder}...");
                     Console.ResetColor();
 
-                    var modFiles = await GetFiles(folder, versionId);
+                    var modFiles = await GetFiles(folder, versionPath);
                     foreach (var item in modFiles)
                     {
-                        var urlTemp = $"{Server}minecraft/downloads/{Profile}/{versionId}/{folder}/{item}";
+                        var urlTemp = $"{Server}minecraft/downloads/{Profile}/{versionPath}/{folder}/{item}";
                         var localFolderPath = Path.Combine(gamePath, folder, item);
                         var jarFile = Path.ChangeExtension(localFolderPath, ".jar");
                         var zipFile = Path.ChangeExtension(localFolderPath, ".zip");

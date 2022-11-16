@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Updater.Models
 {
@@ -11,5 +12,11 @@ namespace Updater.Models
         public string LastVersionId { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
+
+        public bool IsForge => LastVersionId.Contains("forge");
+        public bool IsFabric => LastVersionId.Contains("fabric");
+
+        public string Toolchain => IsForge ? "Forge" : IsFabric ? "Fabric" : string.Empty;
+
     }
 }
