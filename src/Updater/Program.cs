@@ -130,6 +130,7 @@ namespace Updater
                     Console.ResetColor();
 
                     var modFiles = await GetFiles(folder, versionPath);
+                    modFiles = modFiles.Where(m => m.StartsWith("..")).ToList();
                     foreach (var item in modFiles)
                     {
                         var urlTemp = $"{Server}minecraft/downloads/{Profile}/{versionPath}/{folder}/{item}";
